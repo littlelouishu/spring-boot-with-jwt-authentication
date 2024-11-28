@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: spring-jwt-auth
+
+jwt:
+  secret: 8Zz5tw0Ionm3XPZZfN0NOml3z9FMfmpgXwovR9fp6ryDIoGRM8EPHAB6iHsc0fb
+  expiration: 86400
+
+server:
+  port: 8080
+logging:
+  level:
+    org.springframework.security: DEBUG
