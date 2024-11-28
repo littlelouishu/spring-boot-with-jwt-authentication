@@ -27,7 +27,6 @@ public class InMemoryUserRepository {
             .role(Role.ADMIN)
             .enabled(true)
             .build());
-
         save(User.builder()
             .username("user")
             .password("password")
