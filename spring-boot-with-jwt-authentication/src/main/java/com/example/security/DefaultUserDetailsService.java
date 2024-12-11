@@ -14,15 +14,14 @@ import lombok.RequiredArgsConstructor;
 @DependsOn("inMemoryUserRepository")
 @RequiredArgsConstructor
 public class DefaultUserDetailsService implements UserDetailsService {
-    
     private final InMemoryUserRepository userRepository;
-    
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository
-                .findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(
-                    String.format("User with username - %s, not found", username)
-                ));
+            .findByUsername(username)
+            .orElseThrow(
+                () -> new UsernameNotFoundException(
+                    String.format("User with username - %s, not found", username)));
     }
 }
