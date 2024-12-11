@@ -18,20 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-    
     private final AuthenticationManager authenticationManager;
+
     private final UserDetailsService userDetailsService;
+
     private final JwtTokenUtil jwtTokenUtil;
-    
+
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
-        );
-        
+            new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+
         final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         final String jwt = jwtTokenUtil.generateToken(userDetails);
-        
+
         return ResponseEntity.ok(new AuthResponse(jwt));
     }
 }

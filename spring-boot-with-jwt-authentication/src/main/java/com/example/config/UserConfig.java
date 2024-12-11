@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class UserConfig {
-    
     @Bean
     @DependsOn("passwordEncoder")
     public InMemoryUserRepository inMemoryUserRepository(PasswordEncoder passwordEncoder) {
