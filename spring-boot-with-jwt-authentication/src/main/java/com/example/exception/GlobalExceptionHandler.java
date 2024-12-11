@@ -1,6 +1,5 @@
 package com.example.exception;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -9,7 +8,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDateTime;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -18,10 +17,9 @@ public class GlobalExceptionHandler {
         AccessDeniedException ex,
         HttpServletRequest request) {
         ErrorResponse error = ErrorResponse.builder()
-            // timestamp 会自动设置
             .status(HttpStatus.FORBIDDEN.value())
             .error("Forbidden")
-            .message("您没有权限访问此资源")
+            .message("Insufficient privileges.")
             .path(request.getRequestURI())
             .build();
         return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
@@ -34,7 +32,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = ErrorResponse.builder()
             .status(HttpStatus.UNAUTHORIZED.value())
             .error("Unauthorized")
-            .message("认证失败")
+            .message("Unauthorized.")
             .path(request.getRequestURI())
             .build();
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
@@ -47,7 +45,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = ErrorResponse.builder()
             .status(HttpStatus.UNAUTHORIZED.value())
             .error("Unauthorized")
-            .message("用户名或密码错误")
+            .message("Invalied username or password.")
             .path(request.getRequestURI())
             .build();
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
@@ -60,7 +58,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = ErrorResponse.builder()
             .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
             .error("Internal Server Error")
-            .message("服务器内部错误")
+            .message("Internal server error.")
             .path(request.getRequestURI())
             .build();
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
