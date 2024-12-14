@@ -22,10 +22,14 @@ This project demonstrates a Spring Boot application with JWT authentication, dep
 │   │   └── load-generator.yaml
 │   ├── staging/
 │   │   ├── namespace.yaml
-│   │   └── service.yaml
+│   │   ├── service.yaml
+│   │   ├── deployment.yaml
+│   │   └── hpa.yaml
 │   └── production/
 │       ├── namespace.yaml
-│       └── service.yaml
+│       ├── service.yaml
+│       ├── deployment.yaml
+│       └── hpa.yaml
 └── spring-boot-with-jwt-authentication/
     └── src/
         └── main/
