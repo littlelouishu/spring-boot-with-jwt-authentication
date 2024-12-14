@@ -1,0 +1,8 @@
+# kubectl apply -f k8s/development/namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: development
+  labels:
+    name: development
+    environment: development

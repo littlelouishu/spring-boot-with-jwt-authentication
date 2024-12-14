@@ -1,0 +1,17 @@
+# kubectl apply -f k8s/staging/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-jwt-staging
+  namespace: staging
+spec:
+  selector:
+    app: spring-boot-jwt
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: ClusterIP
+
+# Port forward command:
+# kubectl port-forward svc/spring-boot-jwt-staging 8080:80 -n staging

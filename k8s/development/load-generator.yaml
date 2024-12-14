@@ -1,0 +1,21 @@
+# Apply the load generator:
+# kubectl apply -f k8s/development/load-generator.yaml
+
+# Monitor HPA:
+# kubectl get hpa spring-boot-jwt-hpa -n development --watch
+
+# Delete the load generator when done:
+# kubectl delete pod load-generator -n development
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: load-generator
+  namespace: development
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    command: ["/bin/sh", "-c"]
+    args:
+    - "while true; do wget -q -O- http://spring-boot-jwt-dev/auth/login; done"

@@ -1,0 +1,8 @@
+# kubectl apply -f k8s/production/namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production
+  labels:
+    name: production
+    environment: production

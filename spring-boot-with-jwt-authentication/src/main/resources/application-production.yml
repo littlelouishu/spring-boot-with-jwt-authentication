@@ -1,0 +1,6 @@
+jwt:
+  secret: R7m9Vp4Nonm6TPZZfL0LOml8z9KMfmpgXwovT9fp8ryDIoGRM8EPHAB6iHsc0fb
+
+logging:
+  level:
+    org.springframework.security: WARN

@@ -2,9 +2,8 @@ spring:
   application:
     name: spring-jwt-auth
 
-jwt:
-  secret: hP8qkWZpo2K5EYmMUYRz3hLmPGyDONRDPxD1rTBLGqIAGKrdnlEoXkfIUXB8p7h
-  expiration: 86400  # 24 hours in seconds
-
 server:
   port: 8080
+
+jwt:
+  expiration: 86400  # 24 hours in seconds

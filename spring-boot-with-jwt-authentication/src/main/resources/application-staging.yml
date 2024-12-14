@@ -1,0 +1,6 @@
+jwt:
+  secret: K9x7Yw2Lonm4QPZZfM0MOml5z9GMfmpgXwovS9fp7ryDIoGRM8EPHAB6iHsc0fb
+
+logging:
+  level:
+    org.springframework.security: INFO

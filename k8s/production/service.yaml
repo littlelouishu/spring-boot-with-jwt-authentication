@@ -1,0 +1,17 @@
+# kubectl apply -f k8s/production/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-jwt-prod
+  namespace: production
+spec:
+  selector:
+    app: spring-boot-jwt
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
+
+# Port forward command:
+# kubectl port-forward svc/spring-boot-jwt-prod 8080:80 -n production
