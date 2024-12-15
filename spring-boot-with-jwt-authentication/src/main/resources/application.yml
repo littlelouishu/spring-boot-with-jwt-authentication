@@ -7,3 +7,20 @@ server:
 
 jwt:
   expiration: 86400  # 24 hours in seconds
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["health", "metrics", "info", "prometheus"]
+      base-path: /actuator
+      cors:
+        allowed-origins: "*"
+        allowed-methods: GET
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
