@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-jwt
+spec:
+  template:
+    spec:
+      containers:
+      - name: spring-boot-jwt
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "development"
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "300m"
+            memory: "512Mi"

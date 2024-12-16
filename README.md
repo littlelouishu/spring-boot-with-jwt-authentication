@@ -14,6 +14,23 @@ This project demonstrates a Spring Boot application with JWT authentication, dep
 ```
 .
 ├── k8s/
+│   ├── base/
+│   │   ├── deployment.yaml
+│   │   ├── service.yaml
+│   │   ├── hpa.yaml
+│   │   └── kustomization.yaml
+│   └── overlays/
+│       ├── development/
+│       │   ├── kustomization.yaml
+│       │   ├── namespace.yaml
+│       │   └── patches/
+│       │       └── deployment-patch.yaml
+│       └── production/
+│           ├── kustomization.yaml
+│           ├── namespace.yaml
+│           └── patches/
+│               └── deployment-patch.yaml
+├── k8s/
 │   ├── development/
 │   │   ├── namespace.yaml
 │   │   ├── service.yaml
@@ -104,6 +121,78 @@ kubectl port-forward svc/spring-boot-jwt-staging 8080:80 -n staging
 
 # Production
 kubectl port-forward svc/spring-boot-jwt-prod 8080:80 -n production
+```
+
+## Deployment with Kustomize
+
+The project now uses Kustomize for managing Kubernetes configurations across different environments.
+
+### Directory Structure
+```
+k8s/
+├── base/
+│   ├── deployment.yaml
+│   ├── service.yaml
+│   ├── hpa.yaml
+│   └── kustomization.yaml
+└── overlays/
+    ├── development/
+    │   ├── kustomization.yaml
+    │   ├── namespace.yaml
+    │   └── patches/
+    │       └── deployment-patch.yaml
+    └── production/
+        ├── kustomization.yaml
+        ├── namespace.yaml
+        └── patches/
+            └── deployment-patch.yaml
+```
+
+### Deployment Commands
+
+1. Build and push Docker image:
+```bash
+# Get current git commit hash for tag
+IMAGE_TAG=$(git rev-parse --short HEAD)
+
+# Build image
+docker build -t louishu/practice:${IMAGE_TAG} .
+
+# Push image
+docker push louishu/practice:${IMAGE_TAG}
+
+# Update image tag in kustomization files
+sed -i '' "s/newTag: .*/newTag: ${IMAGE_TAG}/" k8s/overlays/*/kustomization.yaml
+```
+
+2. Deploy to development:
+```bash
+kubectl apply -k k8s/overlays/development
+```
+
+3. Deploy to production:
+```bash
+kubectl apply -k k8s/overlays/production
+```
+
+### Verify Deployment
+```bash
+# Check deployment status
+kubectl get all -n development
+# or
+kubectl get all -n production
+
+# View logs
+kubectl logs -n development -l app=spring-boot-jwt
+```
+
+### Cleanup
+```bash
+# Remove development environment
+kubectl delete -k k8s/overlays/development
+
+# Remove production environment
+kubectl delete -k k8s/overlays/production
 ```
 
 ## Testing Guide

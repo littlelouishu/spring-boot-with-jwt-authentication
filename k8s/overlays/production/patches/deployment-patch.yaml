@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-jwt
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+      - name: spring-boot-jwt
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "production"
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+          limits:
+            cpu: "1000m"
+            memory: "1Gi"
