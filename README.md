@@ -188,6 +188,57 @@ minikube dashboard
   
 Each environment has its own namespace and configuration settings for better isolation and management.
 
+## Request Tracking with X-Request-ID
+
+This application implements request tracking using X-Request-ID for distributed tracing and troubleshooting.
+
+### Implementation
+
+#### Backend
+- Automatically generates X-Request-ID if not provided in the request
+- Includes Request-ID in all log entries
+- Returns X-Request-ID in response headers
+
+#### Frontend Implementation Example
+```typescript
+// Add X-Request-ID to all API requests
+api.interceptors.request.use((config) => {
+  config.headers['X-Request-ID'] = uuidv4();
+  return config;
+});
+```
+
+### Troubleshooting Use Cases
+
+1. **Error Tracking**
+```bash
+# Search logs by Request-ID
+kubectl logs -n production -l app=spring-boot-jwt --grep="550e8400-e29b-41d4"
+```
+
+2. **Performance Analysis**
+```
+Request-ID: 550e8400-e29b-41d4
+11:25:30.100 API received
+11:25:30.200 DB query started
+11:25:32.300 DB query completed
+11:25:32.400 Response sent
+→ Identifies 2-second DB query delay
+```
+
+3. **Cross-Service Tracing**
+```
+Frontend → API Gateway → Service A → Service B
+   ↓          ↓            ↓           ↓
+X-Request-ID: 550e8400-e29b-41d4-a716-446655440000
+```
+
+### Best Practices
+- Always include X-Request-ID in API requests from frontend
+- Log Request-ID with relevant context
+- Include Request-ID in error responses for easier debugging
+- Store Request-ID for customer support reference
+
 ## Cleanup
 
 ```bash
