@@ -123,26 +123,98 @@ kubectl describe deployment spring-boot-jwt -n <namespace>
 
 ### Authentication Endpoints
 
-#### Register a new user
-```bash
-curl -X POST http://localhost:8080/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"username":"user","password":"password"}'
-```
+The application comes with two pre-configured users:
+1. Regular User
+   - Username: `user`
+   - Password: `password`
+   - Role: `USER`
+2. Admin User
+   - Username: `admin`
+   - Password: `password`
+   - Role: `ADMIN`
 
 #### Login
 ```bash
-curl -X POST http://localhost:8080/api/auth/login \
+curl -X POST http://localhost:8080/auth/login \
   -H "Content-Type: application/json" \
   -d '{"username":"user","password":"password"}'
 ```
 
-### Protected Endpoints
+Response:
+```json
+{
+  "token": "<JWT_TOKEN>"
+}
+```
 
-#### Access protected resource
+### Available Endpoints
+
+#### Public Endpoint
+```bash
+curl http://localhost:8080/api/public
+```
+
+Response:
+```json
+{
+  "message": "This is a public endpoint",
+  "timestamp": "1234567890"
+}
+```
+
+#### Protected Endpoint (Requires Authentication)
 ```bash
 curl http://localhost:8080/api/protected \
   -H "Authorization: Bearer <your-jwt-token>"
+```
+
+Response:
+```json
+{
+  "message": "This is a protected endpoint",
+  "username": "user",
+  "email": "user@example.com",
+  "role": "USER",
+  "timestamp": 1234567890
+}
+```
+
+#### Admin Endpoint (Requires ADMIN Role)
+```bash
+curl http://localhost:8080/api/admin \
+  -H "Authorization: Bearer <your-jwt-token>"
+```
+
+Response:
+```json
+{
+  "message": "This is an admin endpoint",
+  "timestamp": "1234567890"
+}
+```
+
+### Error Responses
+
+#### Unauthorized Access
+```json
+{
+  "timestamp": "2024-12-16 03:26:23",
+  "status": 401,
+  "error": "Unauthorized",
+  "message": "Please login first.",
+  "path": "/api/protected"
+}
+```
+
+#### Insufficient Privileges
+```json
+{
+  "timestamp": "2024-12-16 03:26:23",
+  "status": 403,
+  "error": "Forbidden",
+  "message": "Insufficient privileges.",
+  "path": "/api/admin"
+}
 ```
 
 ## Contributing
