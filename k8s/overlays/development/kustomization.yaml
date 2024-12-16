@@ -8,10 +8,14 @@ bases:
 
 images:
 - name: louishu/practice
-  newTag: 1.1
+  newTag: 33ce866
 
 patchesStrategicMerge:
 - patches/deployment-patch.yaml
 
 resources:
 - namespace.yaml
+
+commonLabels:
+  app.kubernetes.io/name: spring-boot-jwt
+  app.kubernetes.io/part-of: auth-service
