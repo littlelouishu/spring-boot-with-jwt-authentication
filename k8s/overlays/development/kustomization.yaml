@@ -19,3 +19,5 @@ resources:
 commonLabels:
   app.kubernetes.io/name: spring-boot-jwt
   app.kubernetes.io/part-of: auth-service
+
+  
