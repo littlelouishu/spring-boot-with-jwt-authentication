@@ -135,7 +135,7 @@ The application comes with two pre-configured users:
 
 #### Login
 ```bash
-curl -X POST http://localhost:8080/auth/login \
+curl -v -X POST http://localhost:8080/auth/login \
   -H "Content-Type: application/json" \
   -d '{"username":"user","password":"password"}'
 ```

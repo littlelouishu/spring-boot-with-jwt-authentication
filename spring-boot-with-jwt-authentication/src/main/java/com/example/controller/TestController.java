@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.security.user.User;
+import com.example.common.DefaultResponseHeaders;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class TestController {
     @GetMapping("/public")
+    @DefaultResponseHeaders
     public ResponseEntity<Map<String, String>> publicEndpoint() {
         Map<String, String> response = new HashMap<>();
         response.put("message", "This is a public endpoint");
@@ -25,6 +27,7 @@ public class TestController {
     }
 
     @GetMapping("/protected")
+    @DefaultResponseHeaders
     public ResponseEntity<Map<String, Object>> protectedEndpoint() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
@@ -40,6 +43,7 @@ public class TestController {
     }
 
     @GetMapping("/admin")
+    @DefaultResponseHeaders
     public ResponseEntity<Map<String, String>> adminEndpoint() {
         Map<String, String> response = new HashMap<>();
         response.put("message", "This is an admin endpoint");

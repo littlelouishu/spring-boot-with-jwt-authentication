@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.dto.AuthRequest;
 import com.example.dto.AuthResponse;
+import com.example.common.DefaultResponseHeaders;
 import com.example.security.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/login")
+    @DefaultResponseHeaders
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
